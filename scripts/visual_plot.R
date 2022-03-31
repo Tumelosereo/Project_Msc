@@ -24,8 +24,8 @@ model_out <- (ggplot(new_out)
                   labs(
                     x = "Time(days)",
                     y = "Population",
-                    title = "Probability of surviving is 0%, 12 days of hospitalization 
-                    with 5 availabe beds in population of 150000 individuals."
+                    title = "Probability of surviving is 75%, 12 days of hospitalization 
+                    with 20 availabe beds in population of 150000 individuals."
                   )
                 +
                   facet_wrap(~States, scales = "free") +
@@ -57,18 +57,31 @@ if(dir.exists("./figs")){
 ########################################################
 # Hypothetical drugs
 
+bed_capacity <- 20
 
-bed_cap <- 80
+baseline_cm <- function(bed_cap, psb = .75, dub = 15) new_df %>%
+  filter(ps == psb, du == dub, cc == bed_cap)
 
-baseline_cm <- new_df %>%
-  filter(ps == .8, du == 15, cc == bed_cap)
-
-(ggplot(new_df[new_df$cc == bed_cap, ])
-  + aes(x = ps, y = du, z = cm)
-  + geom_contour(breaks = c(min(new_df$cm),baseline_cm$cm, max(new_df$cm)))
-  + lims(x = c(0,1))
-  #+ geom_point(aes(x = baseline_cm$ps, y = baseline_cm$du), size = 5, col = "red")
-  #+ geom_hline(aes(yintercept = du), data = baseline_cm)
-  #+ geom_vline(aes(xintercept = ps), data = baseline_cm)
+(ggplot()
+  +
+    aes(x = ps, y = du, z = cm, color = as.character(cc))
+  +
+    geom_contour(breaks = c(min(new_df$cm), baseline_cm(bed_capacity)$cm, max(new_df$cm)), data = new_df[new_df$cc == bed_capacity, ])
+  +
+    geom_contour(breaks = c(min(new_df$cm), baseline_cm(80)$cm, max(new_df$cm)), data = new_df[new_df$cc == 80, ])
+  +
+    geom_point(data = baseline_cm(bed_capacity), size = 3, col = "blue")
+  +
+    lims(x = c(0, 1))
+  +
+    geom_vline(aes(xintercept = ps), data = baseline_cm(bed_capacity))
+  +
+    geom_hline(aes(yintercept = du), data = baseline_cm(bed_capacity))
+  +
+    labs(title = "Cumulative mortality at given number of beds"
+         , x = "Probablilty of surving"
+         , y = "Hospital duration (days)"
+         , color = "Number of beds")
+  
 )
 

@@ -38,7 +38,7 @@ prob_treat <- function(Ht, parms) {
 
 beta_value <- function(parms) {
   with(as.list(parms), {
-    R0 * (eta * sigma * alpha / (sigma * pa * alpha + eta * (sigma + pm * alpha) * (1 - pa)))
+    brn * (eta * sigma * alpha / (sigma * pa * alpha + eta * (sigma + pm * alpha) * (1 - pa)))
   })
 }
 
@@ -77,3 +77,4 @@ run_covid <- function(t, vals, pp, statev, ret_cm = TRUE) {
     }
   })
 }
+
