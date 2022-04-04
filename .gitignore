@@ -1,3 +1,5 @@
+# Ignore all excel file
+data/*.xlsx
 
 # History files
 .Rhistory

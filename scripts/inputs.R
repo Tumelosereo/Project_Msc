@@ -8,6 +8,7 @@ pp <- read_excel("./data/sars_cov2_par.xlsx", sheet = "sars_cov2_par")
 
 parm_values <- pp$Value
 names(parm_values) <- pp$Code
+parm_values <- parm_values[1:11]
 
 ## State variables
 
