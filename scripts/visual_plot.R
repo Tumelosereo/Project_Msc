@@ -4,7 +4,7 @@ library(tidyr)
 library(patchwork)
 
 load("./output/new_df.RData")
-source("./scripts/inputs.R", local = TRUE)
+source("./scripts/run_model.R", local = TRUE)
 
 
 # Plot the simulation output 
@@ -28,9 +28,10 @@ model_out <- (ggplot(new_out)
                     with 20 availabe beds in population of 150000 individuals."
                   )
                 +
-                  facet_wrap(~States, scales = "free") +
-                  theme(plot.title = element_text(hjust = 0.5))
-                
+                  facet_wrap(~States, scales = "free") 
+              +
+                ggeasy::easy_center_title()
+              
 )
 
 print(model_out)
@@ -89,5 +90,42 @@ baseline_cm <- function(bed_cap, psb = .75, dub = 15) new_df %>%
   
 )
 
-# plot the 
+# From the above figure we observed that, there is a substantial region that shows
+# that it is always beneficial to use the hypothetical treatment that increases 
+# probability surviving and hospital stay in a population level, which improves
+# mortality outcomes at the baseline. Furthermore, the synergy between bed  
+# capacity and treatment have great impact in the mortality outcomes. The next step 
+# is to consider the cost of resource in the instance of synergy observed.  
+
+#- increasing bed capacity decreases cumulative mortality
+#- increasing duration of stay may increase cumulative mortality at the population level, 
+# even if the individual survival is improved by the drug
+# - The negative impact of increasing duration of stay is bigger if bed capacity is constrained
+# Next steps:
+# - eplore potential synergy between medications and increasing bed capacity (define synergy)
+# - consider cost / benefit for investment in either therapuetics or beds
+
+# Filter according to the know drug base line
+# We have duration of stay and probability of surviving
+
+####################################################################################
+
+toc_control <- new_df %>%
+  filter(ps == .65, du == 28)
+
+hypo_treat<- new_df %>%
+  filter(ps == .8, du == 15)
+
+the_comb <- rbind(toc_control, hypo_treat)
+
+
+(ggplot(the_comb)
+  + aes(x = cc, y = cm, color = as.character(du))
+  + geom_line()
+  #+ ylim(0, 1500)
+  + geom_line(aes(), size = 1)
+  + labs(x = "Number of beds"
+         , y = "Cumulative mortatlity"
+         , color = "Hospital duration (days)")
+)
 

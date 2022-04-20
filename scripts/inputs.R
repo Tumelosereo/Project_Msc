@@ -1,5 +1,9 @@
 library(readxl)
 
+# Source the functions script
+
+source("./scripts/functions.R", local = TRUE)
+
 # Read Parameter values for SARS Cov 2.
 
 pp <- read_excel("./data/sars_cov2_par.xlsx", sheet = "sars_cov2_par")
