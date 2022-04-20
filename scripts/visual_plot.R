@@ -68,7 +68,7 @@ baseline_cm <- function(bed_cap, psb = .75, dub = 15) new_df %>%
   +
     geom_contour(breaks = c(min(new_df$cm), baseline_cm(bed_capacity)$cm, max(new_df$cm)), data = new_df[new_df$cc == bed_capacity, ])
   +
-    geom_contour(breaks = c(min(new_df$cm), baseline_cm(80)$cm, max(new_df$cm)), data = new_df[new_df$cc == 80, ])
+    geom_contour(breaks = c(min(new_df$cm), baseline_cm(180)$cm, max(new_df$cm)), data = new_df[new_df$cc == 180, ])
   +
     geom_point(data = baseline_cm(bed_capacity), size = 3, col = "blue")
   +
@@ -82,6 +82,12 @@ baseline_cm <- function(bed_cap, psb = .75, dub = 15) new_df %>%
          , x = "Probablilty of surving"
          , y = "Hospital duration (days)"
          , color = "Number of beds")
+  #+ 
+  #  theme(plot.caption = element_text(hjust = 0.5))
+  +
+    ggeasy::easy_center_title()
   
 )
+
+# plot the 
 
