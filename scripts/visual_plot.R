@@ -3,7 +3,7 @@ library(dplyr)
 library(tidyr)
 library(patchwork)
 
-load("./output/new_df.RData")
+#load("./output/new_df.RData")
 source("./scripts/run_model.R", local = TRUE)
 
 
@@ -22,15 +22,17 @@ model_out <- (ggplot(new_out)
                   ), size = 1)
                 +
                   labs(
-                    x = "Time(days)",
-                    y = "Population",
-                    title = "Probability of surviving is 75%, 12 days of hospitalization 
+                    x = "Time(days)"
+                    , y = "Population"
+                    , title = "Probability of surviving is 75%, 12 days of hospitalization 
                     with 20 availabe beds in population of 150000 individuals."
                   )
                 +
                   facet_wrap(~States, scales = "free") 
               +
                 ggeasy::easy_center_title()
+              +
+                theme_bw()
               
 )
 
@@ -48,7 +50,7 @@ if(dir.exists("./figs")){
 }else{
   dir.create("./figs")
   ggsave(filename = "./figs/model_out.jpg",
-         plot = model_dynmc,
+         plot = model_out,
          width = 8.51,
          height = 5.67,
          units = "in")
@@ -60,12 +62,13 @@ if(dir.exists("./figs")){
 
 bed_capacity <- 20
 
-baseline_cm <- function(bed_cap, psb = .75, dub = 15) new_df %>%
+baseline_cm <- function(bed_cap, psb = .71, dub = 19) new_df %>%
   filter(ps == psb, du == dub, cc == bed_cap)
 
-(ggplot()
+plot1 <- (ggplot()
   +
-    aes(x = ps, y = du, z = cm, color = as.character(cc))
+    aes(x = ps, y = du, z = cm, color = as.character(cc)
+        )
   +
     geom_contour(breaks = c(min(new_df$cm), baseline_cm(bed_capacity)$cm, max(new_df$cm)), data = new_df[new_df$cc == bed_capacity, ])
   +
@@ -79,16 +82,33 @@ baseline_cm <- function(bed_cap, psb = .75, dub = 15) new_df %>%
   +
     geom_hline(aes(yintercept = du), data = baseline_cm(bed_capacity))
   +
-    labs(title = "Cumulative mortality at given number of beds"
-         , x = "Probablilty of surving"
+    labs(#title = "Cumulative mortality at given number of beds",
+          x = "Probablilty of surving"
          , y = "Hospital duration (days)"
          , color = "Number of beds")
-  #+ 
-  #  theme(plot.caption = element_text(hjust = 0.5))
+  + 
+    theme_bw()
   +
     ggeasy::easy_center_title()
   
 )
+
+if(dir.exists("./figs")){
+  ggsave(filename = "./figs/basetoci.jpg",
+         plot = plot1,
+         width = 8.51,
+         height = 5.67,
+         units = "in")
+  
+}else{
+  dir.create("./figs")
+  ggsave(filename = "./figs/basetoci.jpg",
+         plot = plot1,
+         width = 8.51,
+         height = 5.67,
+         units = "in")
+}
+
 
 # From the above figure we observed that, there is a substantial region that shows
 # that it is always beneficial to use the hypothetical treatment that increases 

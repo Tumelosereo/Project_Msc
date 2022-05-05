@@ -23,7 +23,7 @@ CM1 <- run_covid(
 ## expand.grid helps to create the data with matching number of length.
 
 new_vals <- expand.grid(
-  ps = seq(0, 1, 0.05),
+  ps = seq(0, 1, 0.01),
   du = 8:30,
   cc =  seq(20, 300, 20)
 )
