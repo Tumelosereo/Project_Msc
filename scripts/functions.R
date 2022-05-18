@@ -1,3 +1,9 @@
+.args <- if(interactive()){
+  c("./functions/functions.RData")
+}else{
+    commandArgs(trailingOnly = TRUE)
+}
+
 # Include libraries
 library(deSolve)
 
@@ -78,3 +84,7 @@ run_covid <- function(t, vals, pp, statev, ret_cm = TRUE) {
   })
 }
 
+# makefile <- "random string"
+## Save the environment
+
+save(list = ls(), file = .args[1])

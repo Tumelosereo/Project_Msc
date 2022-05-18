@@ -1,39 +1,33 @@
 library(dplyr)
 
 # Source the inputs
-
+source("./scripts/functions.R", local = TRUE)
 source("./scripts/inputs.R", local = TRUE)
 
 ## Run the model to calculate cumulative
 
-CM1 <- run_covid(
-  t = time_seq,
-  pp = parm_values,
-  vals = c(
-    ps = 0.25,
-    du = 12,
-    cc = 20
-  ),
-  statev = state_var
-)
+# CM1 <- run_covid(
+#   t = time_seq,
+#   pp = parm_values,
+#   vals = c(
+#     ps = 0.25,
+#     du = 12,
+#     cc = 20
+#   ),
+#   statev = state_var
+# )
 
 ## We define new parameters with different values of
 ## ps, a and du.
 
-## expand.grid helps to create the data with matching number of length.
 
-new_vals <- expand.grid(
-  ps = seq(0, 1, 0.01),
-  du = 8:30,
-  cc =  seq(20, 300, 20)
-)
 
-# Run the model to produce all rates from the COVID
-
+# Run the model to produce all rates of a diseas at baseline
+# base_sar2 <- c(ps=.75, du = 15, cc = 20)
 out <- run_covid(
   t = time_seq,
   pp = parm_values,
-  vals = c(ps=.75, du = 15, cc = 20),
+  vals = baseline_vals,
   statev = state_var, ret_cm = FALSE
 )
 

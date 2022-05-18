@@ -123,7 +123,7 @@ if(dir.exists("./figs")){
 # - The negative impact of increasing duration of stay is bigger if bed capacity is constrained
 # Next steps:
 # - eplore potential synergy between medications and increasing bed capacity (define synergy)
-# - consider cost / benefit for investment in either therapuetics or beds
+# - consider cost / benefit for investment in either therapeutics or beds
 
 # Filter according to the know drug base line
 # We have duration of stay and probability of surviving
