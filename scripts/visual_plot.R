@@ -1,3 +1,12 @@
+.args <- if(interactive()){
+  c("./data/sars_cov_2_outputs.RData",  # inputs
+    "./figs/sars_cov_2_out.png")  # outputs
+}else{
+  commandArgs(trailingOnly = TRUE)
+}
+
+target <- tail(.args, 1)
+
 library(ggplot2)
 library(dplyr)
 library(tidyr)

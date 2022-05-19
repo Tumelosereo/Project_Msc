@@ -1,11 +1,11 @@
 .args <- if(interactive()){
-  c("./functions/functions.RData")
+  c("./functions/functions.RData") # output
 }else{
     commandArgs(trailingOnly = TRUE)
 }
 
 # Include libraries
-library(deSolve)
+# library(deSolve)
 
 ## The following function calculates the rates for our model, it takes
 ## parameters, states variables and time as inputs.

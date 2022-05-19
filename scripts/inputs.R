@@ -1,7 +1,7 @@
 .args <- if(interactive()){
-  c("./data/sars_cov_2_par.xlsx",
-    "./data/sars_cov_2_baseline.xlsx",
-    "./data/sars_cov_2.RData")
+  c("./data/sars_cov_2_par.xlsx",   # inputs
+    "./data/sars_cov_2_baseline.xlsx",  
+    "./data/sars_cov_2.RData") # output
 }else{
   commandArgs(trailingOnly = TRUE)
 }
