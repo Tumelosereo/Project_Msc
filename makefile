@@ -9,12 +9,22 @@
 ./functions/functions.RData: ./scripts/functions.R 
 	Rscript $^ $@
 
-# Creat the time series and the model outputs	
+#### Creat the time series and the model outputs #####
+
+# SARS_Cov_2
 
 ./data/sars_cov_2.RData: ./scripts/inputs.R ./data/sars_cov_2_par.xlsx ./data/sars_cov_2_baseline.xlsx
 	Rscript $^ $@
 	
-./output/sars_cov_2_outputs.rds: ./scripts/run_model.R ./data/sars_cov_2.RData ./functions/functions.RData
+./output/sars_cov_2_outputs.RData: ./scripts/run_model.R ./data/sars_cov_2.RData ./functions/functions.RData
+	Rscript $^ $@
+	
+# Ebola
+
+./data/ebola.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/ebola_baseline.xlsx
+	Rscript $^ $@
+	
+./output/ebola_outputs.RData: ./scripts/run_model.R ./data/ebola.RData ./functions/functions.RData
 	Rscript $^ $@
 	
 # Plots

@@ -1,7 +1,7 @@
 .args <- if(interactive()){
   c("./data/sars_cov_2.RData",  # inputs
     "./functions/functions.RData",  
-    "./output/sars_cov_2_outputs.rds")  # outputs
+    "./output/sars_cov_2_outputs.RData")  # outputs
 }else{
   commandArgs(trailingOnly = TRUE)
 }
@@ -73,7 +73,7 @@ baseline_output <- run_covid(
 #   save(cm_res, file = "./output/cm_res.RData")
 # }
 
-cm_res <- sapply(1:5, function(ii) {
+cm_res <- sapply(1:nrow(new_vals), function(ii) {
     run_covid(
       t = time_seq,
       pp = parm_values,
@@ -87,5 +87,5 @@ cm_res <- sapply(1:5, function(ii) {
 
 cum_mortality_df <- cbind(new_vals, cm = cm_res)
 
-saveRDS(object = cum_mortality_df, file = target)
+save(cum_mortality_df, baseline_output, file = target)
 

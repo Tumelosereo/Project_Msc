@@ -4,9 +4,6 @@
     commandArgs(trailingOnly = TRUE)
 }
 
-# Include libraries
-# library(deSolve)
-
 ## The following function calculates the rates for our model, it takes
 ## parameters, states variables and time as inputs.
 
@@ -84,7 +81,6 @@ run_covid <- function(t, vals, pp, statev, ret_cm = TRUE) {
   })
 }
 
-# makefile <- "random string"
-## Save the environment
+# Save the environment
 
 save(list = ls(), file = .args[1])
