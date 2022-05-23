@@ -8,20 +8,6 @@
 
 library(readxl)
 
-# Source the functions script
-
-# source("./scripts/functions.R", local = TRUE)
-
-#read baseline vals
-# if(.args[2] == "sars2"){
-#   baseline_vals = c(du = , ...)
-# }
-# if(.args[2] == "sars1"){
-# 
-# }
-# if(.args[2] == "ebola"){
-# 
-# }
 baseline_vals_raw <- read_excel(.args[2])
 
 # Read Parameter values for SARS-Cov-2.

@@ -1,6 +1,6 @@
 .args <- if(interactive()){
-  c("./data/sars_cov_2_outputs.RData",  # inputs
-    "./figs/sars_cov_2_out.png")  # outputs
+  c("./output/sars_cov_2_outputs.RData",  # inputs
+    "./figs/sars_cov_2_plot.jpg")  # outputs
 }else{
   commandArgs(trailingOnly = TRUE)
 }
@@ -12,17 +12,17 @@ library(dplyr)
 library(tidyr)
 library(patchwork)
 
-#load("./output/new_df.RData")
-source("./scripts/run_model.R", local = TRUE)
+load(.args[[1]])
+#source("./scripts/run_model.R", local = TRUE)
 
 
 # Plot the simulation output 
 # Make the data(out) long and plot according to the states.
 
-new_out <- out %>%
+new_out <- baseline_output %>%
   pivot_longer(S:CA, values_to = "Count", names_to = "States")
 
-model_out <- (ggplot(new_out)
+plot1 <- (ggplot(new_out)
                 +
                   geom_line(aes(
                     x = time,
@@ -45,25 +45,6 @@ model_out <- (ggplot(new_out)
               
 )
 
-print(model_out)
-
-# save the model output 
-
-if(dir.exists("./figs")){
-  ggsave(filename = "./figs/model_out.jpg",
-         plot = model_out,
-         width = 8.51,
-         height = 5.67,
-         units = "in")
-  
-}else{
-  dir.create("./figs")
-  ggsave(filename = "./figs/model_out.jpg",
-         plot = model_out,
-         width = 8.51,
-         height = 5.67,
-         units = "in")
-}
 
 
 ########################################################
@@ -71,17 +52,23 @@ if(dir.exists("./figs")){
 
 bed_capacity <- 20
 
-baseline_cm <- function(bed_cap, psb = .71, dub = 19) new_df %>%
+baseline_cm <- function(bed_cap, psb = .71, dub = 19) cum_mortality_df %>%
   filter(ps == psb, du == dub, cc == bed_cap)
 
-plot1 <- (ggplot()
+plot2 <- (ggplot()
   +
     aes(x = ps, y = du, z = cm, color = as.character(cc)
         )
   +
-    geom_contour(breaks = c(min(new_df$cm), baseline_cm(bed_capacity)$cm, max(new_df$cm)), data = new_df[new_df$cc == bed_capacity, ])
+    geom_contour(breaks = c(min(cum_mortality_df$cm), 
+                            baseline_cm(bed_capacity)$cm, 
+                            max(cum_mortality_df$cm)), 
+                 data = cum_mortality_df[cum_mortality_df$cc == bed_capacity, ])
   +
-    geom_contour(breaks = c(min(new_df$cm), baseline_cm(180)$cm, max(new_df$cm)), data = new_df[new_df$cc == 180, ])
+    geom_contour(breaks = c(min(cum_mortality_df$cm), 
+                            baseline_cm(180)$cm, 
+                            max(cum_mortality_df$cm)), 
+                 data = cum_mortality_df[cum_mortality_df$cc == 180, ])
   +
     geom_point(data = baseline_cm(bed_capacity), size = 3, col = "blue")
   +
@@ -102,17 +89,19 @@ plot1 <- (ggplot()
   
 )
 
+
+
 if(dir.exists("./figs")){
-  ggsave(filename = "./figs/basetoci.jpg",
-         plot = plot1,
+  ggsave(filename = target,
+         plot = plot2,
          width = 8.51,
          height = 5.67,
          units = "in")
-  
+
 }else{
   dir.create("./figs")
-  ggsave(filename = "./figs/basetoci.jpg",
-         plot = plot1,
+  ggsave(filename = target,
+         plot = plot2,
          width = 8.51,
          height = 5.67,
          units = "in")
@@ -139,22 +128,22 @@ if(dir.exists("./figs")){
 
 ####################################################################################
 
-toc_control <- new_df %>%
-  filter(ps == .65, du == 28)
-
-hypo_treat<- new_df %>%
-  filter(ps == .8, du == 15)
-
-the_comb <- rbind(toc_control, hypo_treat)
-
-
-(ggplot(the_comb)
-  + aes(x = cc, y = cm, color = as.character(du))
-  + geom_line()
-  #+ ylim(0, 1500)
-  + geom_line(aes(), size = 1)
-  + labs(x = "Number of beds"
-         , y = "Cumulative mortatlity"
-         , color = "Hospital duration (days)")
-)
+# toc_control <- cum_mortality_df %>%
+#   filter(ps == .65, du == 28)
+# 
+# hypo_treat<- cum_mortality_df %>%
+#   filter(ps == .8, du == 15)
+# 
+# the_comb <- rbind(toc_control, hypo_treat)
+# 
+# 
+# (ggplot(the_comb)
+#   + aes(x = cc, y = cm, color = as.character(du))
+#   + geom_line()
+#   #+ ylim(0, 1500)
+#   + geom_line(aes(), size = 1)
+#   + labs(x = "Number of beds"
+#          , y = "Cumulative mortatlity"
+#          , color = "Hospital duration (days)")
+# )
 

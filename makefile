@@ -4,7 +4,7 @@
 # $@ is targets
 
 
-# Creating the funtions and saving as RData that to be used.
+# Creating the funtions and saving as RData to be used.
 
 ./functions/functions.RData: ./scripts/functions.R 
 	Rscript $^ $@
@@ -27,9 +27,9 @@
 ./output/ebola_outputs.RData: ./scripts/run_model.R ./data/ebola.RData ./functions/functions.RData
 	Rscript $^ $@
 	
-# Plots
+# SARS-Cov-2 figures 
 
-./figs/sars_cov_2_out.png: ./scripts/visual_plot.R ./output/sars_cov_2_cm_outputs.RData
+./figs/sars_cov_2_plot.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData
 	Rscript $^ $@
 	
 	
