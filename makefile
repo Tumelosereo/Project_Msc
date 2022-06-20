@@ -32,7 +32,10 @@
 ./figs/sars_cov_2_plot.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData
 	Rscript $^ $@
 	
-	
+# Ebola figures
+
+./figs/ebola_plot.jpg: ./scripts/visual_plot.R ./output/ebola_outputs.RData
+	Rscript $^ $@
 
 
 

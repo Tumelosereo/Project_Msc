@@ -25,6 +25,13 @@ baseline_output <- run_covid(
   statev = state_var, ret_cm = FALSE
 )
 
+## Add the column of H = Hts + Htd
+
+baseline_output <- baseline_output %>% 
+  mutate(Cur_addm = rowSums(cbind(baseline_output$Hts, baseline_output$Htd))) %>% 
+  mutate(cum_add_days = cumsum(Cur_addm))
+
+
 ## Here we only run with 1 rows from data frame new_vals.
 
 run_covid(
