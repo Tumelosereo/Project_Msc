@@ -44,7 +44,7 @@ time_seq <- seq(0, 365, 1)
 new_vals <- expand.grid(
   ps = seq(0, 1, 0.01),
   du = 8:30,
-  cc =  seq(20, 300, 20)
+  cc =  c(seq(20, 40, 1), seq(60, 300, 20))
 )
 
 save(list = ls(), file = tail(.args,1))
