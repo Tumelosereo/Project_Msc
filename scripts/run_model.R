@@ -34,11 +34,14 @@ baseline_output <- baseline_output %>%
 
 ## Here we only run with 1 rows from data frame new_vals.
 
+rem_beds_tret <- new_vals %>% filter(round(ps, 2) == round(.69, 2), du == 19, cc == 20)
+
 run_covid(
   t = time_seq,
   pp = parm_values,
-  vals = new_vals[3, ],
-  statev = state_var
+  vals = rem_beds_tret,
+  statev = state_var,
+  ret_cm = FALSE
 )
 
 ## Calculating Cumulative Mortality for all values of (new_vals)

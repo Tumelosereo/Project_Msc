@@ -1,5 +1,6 @@
 .args <- if(interactive()){
-  c("./output/sars_cov_2_outputs.RData",  # inputs
+  c("./functions/functions.RData",
+    "./output/sars_cov_2_outputs.RData",  # inputs
     "./data/cost_analysis.rds")  # outputs
 }else{
   commandArgs(trailingOnly = TRUE)
@@ -8,25 +9,25 @@
 target <- tail(.args, 1)
 
 load(.args[[1]])
+load(.args[[2]])
 
-base_ps <- .70
-base_du <- 15
-base_cc <- 20
+# Usual care for w/o Toci
 
-# Remdesiver treatment
+base_toc <- cum_mortality_df %>% 
+  filter(ps == .65, du == 28, cc == 20)
 
-treat_ps <- .93
-treat_du <- 15
-treat_cc <- base_cc 
+# Toci treatment
 
+treat_toc <- cum_mortality_df %>% 
+  filter(round(ps, 2) == round(.69, 2), du == 15, cc == 20)
 
-treat_cm <- cum_mortality_df %>% 
-  filter(ps == treat_ps, du == treat_du, cc == treat_cc) %>% 
-  select(cm)
+treat_cm <- treat_toc %>% select(cm)
 
-bed_scen <- cum_mortality_df %>% 
-  filter(round(ps, 2) == round(base_ps, 2), du == base_du) %>% 
+bed_scen <- cum_mortality_df %>%
+  filter(round(ps, 2) == round(.65, 2), du == 28) %>% 
   mutate(tmp = cm - as.numeric(treat_cm)) %>%
   filter(abs(tmp) == min(abs(tmp)))
+
+
 
 saveRDS(bed_scen, file = target)

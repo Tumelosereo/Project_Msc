@@ -2,25 +2,36 @@ bed_scen <- readRDS("./data/cost_analysis.rds")
 
 load("output/sars_cov_2_outputs.RData")
 
-
-my_data <- baseline_output %>% select(Cur_addm, cum_add_days) %>% 
-  mutate(delta.B = replicate(nrow(baseline_output), delta.B)) %>% 
-  mutate(Cab = seq(0, 365, 1))
-
 # Cost of treatment
 
-delta.B <- bed_scen$cc - 20
+inputs <- c(H = tail(treat_df, 1)[1],
+            A_t = tail(treat_df, 1)[,2],
+            A_b = tail(casual_df, 1)[1],
+            delta.B = bed_scen$cc - 20)
+
+x_value <- seq(0, 10, 0.1)
 
 # To have a net cost benefit we assume Cost of treatment must be less than cost of beds.
 # That is cost_tret > cost_beds. 
 # Let C_b/C_a = variable Cba and 
 
-Cost_ba <- function(Cab, A_b, A_t, delta.B) {
-   with(parms, {
-     (A_b - A_t + delta.B * Cab) / H
+cost_ba <- function(x, inputs) {
+   with(as.list(inputs), {
+     (A_b - A_t + delta.B * x) / H
    })
 }
 
-my_data[2, ]
+cost_value <-  cost_ba(x = x_value,
+                     inputs = inputs)
 
-Cost_ba(Cab = my_data[2,1], A_t = 20,  delta.B = my_data$delta.B)
+cost_df <- data.frame(cost_value,
+                 x_value)
+
+(ggplot(cost_df) 
+  + geom_line(aes(x = x_value, 
+                 y = cost_value))
+  + labs(x = "Cb/Ca",
+       y = "Ct/Ca") 
+)
+
+
