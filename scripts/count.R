@@ -1,5 +1,6 @@
 .args <- if(interactive()){
   c("./data/sars_cov_2.RData",   # inputs
+    "./data/cost_analysis.rds",
     "./data/toci_treat.xlsx",
     "./output/my_data.rds") # output
 }else{
@@ -11,7 +12,8 @@ library(readxl)
 # Load data to be used
 
 load(.args[[1]])
-treat <- read_excel(.args[2])
+load(.args[[2]])
+treat <- read_excel(.args[3])
 
 # Read the values for usual care
 
@@ -33,7 +35,7 @@ treat_df <- run_covid(
   ret_cm = FALSE )
 
 treat_df <- treat_df %>% 
-  mutate(Cur_addm = rowSums(cbind(my_df$Hts, my_df$Htd))) %>% 
+  mutate(Cur_addm = rowSums(cbind(treat_df$Hts, treat_df$Htd))) %>% 
   mutate(cum_add_days = cumsum(Cur_addm)) %>% 
   select(CA, cum_add_days)
 
@@ -45,10 +47,11 @@ casual_df <- run_covid(
   ret_cm = FALSE )
 
 casual_df <- casual_df %>% 
-  mutate(Cur_addm = rowSums(cbind(my_df$Hts, my_df$Htd))) %>% 
+  mutate(Cur_addm = rowSums(cbind(casual_df$Hts, casual_df$Htd))) %>% 
   mutate(cum_add_days = cumsum(Cur_addm)) %>% 
   select(CA, cum_add_days)
 
 
 tail(treat_df, 1)[,2]
 tail(casual_df, 1)[1]
+tail(treat_df$CA,1)

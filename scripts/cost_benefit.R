@@ -4,9 +4,9 @@ load("output/sars_cov_2_outputs.RData")
 
 # Cost of treatment
 
-inputs <- c(H = tail(treat_df, 1)[1],
-            A_t = tail(treat_df, 1)[,2],
-            A_b = tail(casual_df, 1)[1],
+inputs <- c(H = tail(treat_df$CA, 1),
+            A_t = tail(treat_df$cum_add_days, 1),
+            A_b = tail(casual_df$cum_add_days, 1),
             delta.B = bed_scen$cc - 20)
 
 x_value <- seq(0, 10, 0.1)
