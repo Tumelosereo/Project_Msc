@@ -2,10 +2,12 @@
   c("./data/sars_cov_2.RData",   # inputs
     "./data/cost_analysis.rds",
     "./data/toci_treat.xlsx",
-    "./output/my_data.rds") # output
+    "./output/my_data.RData") # output
 }else{
   commandArgs(trailingOnly = TRUE)
 }
+
+target <- tail(.args, 1)
 
 library(readxl)
 
@@ -51,7 +53,4 @@ casual_df <- casual_df %>%
   mutate(cum_add_days = cumsum(Cur_addm)) %>% 
   select(CA, cum_add_days)
 
-
-tail(treat_df, 1)[,2]
-tail(casual_df, 1)[1]
-tail(treat_df$CA,1)
+save(treat_df, casual_df, file = target)

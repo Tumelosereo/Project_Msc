@@ -1,4 +1,4 @@
-bed_scen <- readRDS("./data/cost_analysis.rds")
+bed_scen <- load("./data/cost_analysis.RData")
 
 load("output/sars_cov_2_outputs.RData")
 

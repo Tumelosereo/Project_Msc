@@ -1,7 +1,7 @@
 .args <- if(interactive()){
   c("./functions/functions.RData",
     "./output/sars_cov_2_outputs.RData",  # inputs
-    "./data/cost_analysis.rds")  # outputs
+    "./data/cost_analysis.RData")  # outputs
 }else{
   commandArgs(trailingOnly = TRUE)
 }
@@ -30,4 +30,4 @@ bed_scen <- cum_mortality_df %>%
 
 
 
-saveRDS(bed_scen, file = target)
+save(bed_scen, file = target)
