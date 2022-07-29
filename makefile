@@ -44,10 +44,10 @@
 
 # SARS-Cov-2 treatment
 
-./data/cost_analysis.RData: ./scripts/beds_eq_treatment.R ./functions/functions.RData ./output/sars_cov_2_outputs.RData
+./data/cost_analysis.RData: ./scripts/beds_eq_treatment.R ./output/sars_cov_2_outputs.RData
 	Rscript $^ $@
 	
-./output/my_data.RData: ./scripts/count.R ./data/cost_analysis.RData ./data/toci_treat.xlsx ./data/sars_cov_2.RData
+./output/my_data.RData: ./scripts/count.R ./functions/functions.RData ./data/cost_analysis.RData ./data/toci_treat.xlsx ./data/sars_cov_2.RData
 	Rscript $^ $@
 	
 ./figs/toci_cost.jpg: ./scripts/cost_benefit.R ./data/cost_analysis.RData ./output/my_data.RData

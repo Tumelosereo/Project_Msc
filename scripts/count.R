@@ -1,5 +1,6 @@
 .args <- if(interactive()){
-  c("./data/sars_cov_2.RData",   # inputs
+  c("./functions/functions.RData", # inputs
+    "./data/sars_cov_2.RData",   
     "./data/cost_analysis.RData",
     "./data/toci_treat.xlsx",
     "./output/my_data.RData") # output
@@ -10,11 +11,14 @@
 target <- tail(.args, 1)
 
 library(readxl)
+library(dplyr)
+library(deSolve)
 
 # Load data to be used
 
 load(.args[[1]])
 load(.args[[2]])
+load(.args[[3]])
 treat <- read_excel(.args[3])
 
 # Read the values for usual care

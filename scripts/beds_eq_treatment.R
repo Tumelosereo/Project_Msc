@@ -1,6 +1,5 @@
 .args <- if(interactive()){
-  c("./functions/functions.RData",
-    "./output/sars_cov_2_outputs.RData",  # inputs
+  c("./output/sars_cov_2_outputs.RData",  # inputs
     "./data/cost_analysis.RData")  # outputs
 }else{
   commandArgs(trailingOnly = TRUE)
@@ -11,7 +10,6 @@ library(dplyr)
 target <- tail(.args, 1)
 
 load(.args[[1]])
-load(.args[[2]])
 
 # Usual care for w/o Toci
 
