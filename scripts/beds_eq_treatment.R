@@ -6,6 +6,8 @@
   commandArgs(trailingOnly = TRUE)
 }
 
+library(dplyr)
+
 target <- tail(.args, 1)
 
 load(.args[[1]])

@@ -1,6 +1,6 @@
 .args <- if(interactive()){
   c("./data/sars_cov_2.RData",   # inputs
-    "./data/cost_analysis.rds",
+    "./data/cost_analysis.RData",
     "./data/toci_treat.xlsx",
     "./output/my_data.RData") # output
 }else{

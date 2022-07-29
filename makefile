@@ -38,6 +38,28 @@
 	Rscript $^ $@
 
 
+###########################################################################################
+
+# Cost analysis
+
+# SARS-Cov-2 treatment
+
+./data/cost_analysis.RData: ./scripts/beds_eq_treatment.R ./functions/functions.RData ./output/sars_cov_2_outputs.RData
+	Rscript $^ $@
+	
+./output/my_data.RData: ./scripts/count.R ./data/cost_analysis.RData ./data/toci_treat.xlsx ./data/sars_cov_2.RData
+	Rscript $^ $@
+	
+./figs/toci_cost.jpg: ./scripts/cost_benefit.R ./data/cost_analysis.RData ./output/my_data.RData
+	Rscript $^ $@
+
+# Ebola treatmet
+
+./data/ebola_cost_analysis.RData: ./scripts/beds_eq_treatment.R ./functions/functions.RData ./output/ebola_outputs.RData
+	Rscript $^ $@
+	
+./output/ebola_data_cost.RData: ./data/ebola_cost_analysis.RData ./data/zmapp.xlsx ./data/ebola.RData
+	Rscript $^ $@
 
 
 

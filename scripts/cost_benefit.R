@@ -1,6 +1,16 @@
-bed_scen <- load("./data/cost_analysis.RData")
+.args <- if(interactive()){
+  c("./data/cost_analysis.RData", 
+    "./output/my_data.RData",
+    "./figs/toci_cost.jpg") # Outputs
+}else{
+  commandArgs(trailingOnly = TRUE)
+}
 
-load("output/sars_cov_2_outputs.RData")
+target <- tail(.args, 1)
+
+load(.args[[1]])
+
+load(.args[[2]])
 
 # Cost of treatment
 
@@ -9,7 +19,7 @@ inputs <- c(H = tail(treat_df$CA, 1),
             A_b = tail(casual_df$cum_add_days, 1),
             delta.B = bed_scen$cc - 20)
 
-x_value <- seq(0, 10, 0.1)
+x_value <- seq(0, 20, 0.1)
 
 # To have a net cost benefit we assume Cost of treatment must be less than cost of beds.
 # That is cost_tret > cost_beds. 
@@ -27,11 +37,28 @@ cost_value <-  cost_ba(x = x_value,
 cost_df <- data.frame(cost_value,
                  x_value)
 
-(ggplot(cost_df) 
+plot3 <- (ggplot(cost_df) 
   + geom_line(aes(x = x_value, 
                  y = cost_value))
-  + labs(x = "Cb/Ca",
-       y = "Ct/Ca") 
+  + labs(x = bquote(C[B]/C[A]),
+       y = bquote(C[T]/C[A])) 
+  + theme_bw()
+  + ylim(c(5, 7))
 )
 
+if(dir.exists("./figs")){
+  ggsave(filename = target,
+         plot = plot3,
+         width = 8.51,
+         height = 5.67,
+         units = "in")
+  
+}else{
+  dir.create("./figs")
+  ggsave(filename = target,
+         plot = plot3,
+         width = 8.51,
+         height = 5.67,
+         units = "in")
+}
 

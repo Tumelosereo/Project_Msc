@@ -25,7 +25,7 @@ baseline_output <- run_covid(
   statev = state_var, ret_cm = FALSE
 )
 
-## Add the column of H = Hts + Htd
+## Add the column of H = Hts + Htd that is currently admitted in hospital
 
 baseline_output <- baseline_output %>% 
   mutate(Cur_addm = rowSums(cbind(baseline_output$Hts, baseline_output$Htd))) %>% 
@@ -34,15 +34,15 @@ baseline_output <- baseline_output %>%
 
 ## Here we only run with 1 rows from data frame new_vals.
 
-rem_beds_tret <- new_vals %>% filter(round(ps, 2) == round(.69, 2), du == 19, cc == 20)
+#rem_beds_tret <- new_vals %>% filter(round(ps, 2) == round(.69, 2), du == 19, cc == 20)
 
-run_covid(
-  t = time_seq,
-  pp = parm_values,
-  vals = rem_beds_tret,
-  statev = state_var,
-  ret_cm = FALSE
-)
+# run_covid(
+#   t = time_seq,
+#   pp = parm_values,
+#   vals = rem_beds_tret,
+#   statev = state_var,
+#   ret_cm = FALSE
+# )
 
 ## Calculating Cumulative Mortality for all values of (new_vals)
 
