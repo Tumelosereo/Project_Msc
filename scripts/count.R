@@ -1,7 +1,7 @@
 .args <- if(interactive()){
   c("./functions/functions.RData", # inputs
     "./data/sars_cov_2.RData",   
-    "./data/cost_analysis.RData",
+    "./data/bed_scen.rds",
     "./data/toci_treat.xlsx",
     "./output/my_data.RData") # output
 }else{
@@ -18,8 +18,9 @@ library(deSolve)
 
 load(.args[[1]])
 load(.args[[2]])
-load(.args[[3]])
-treat <- read_excel(.args[3])
+bed_scen <- readRDS(.args[[3]])
+
+treat <- read_excel(.args[4])
 
 # Read the values for usual care
 

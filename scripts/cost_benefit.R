@@ -1,14 +1,16 @@
 .args <- if(interactive()){
-  c("./data/cost_analysis.RData", 
+  c("./data/bed_scen.rds", 
     "./output/my_data.RData",
     "./figs/toci_cost.jpg") # Outputs
 }else{
   commandArgs(trailingOnly = TRUE)
 }
 
+library(ggplot2)
+
 target <- tail(.args, 1)
 
-load(.args[[1]])
+bed_scen <- readRDS(.args[[1]])
 
 load(.args[[2]])
 
@@ -43,7 +45,7 @@ plot3 <- (ggplot(cost_df)
   + labs(x = bquote(C[B]/C[A]),
        y = bquote(C[T]/C[A])) 
   + theme_bw()
-  + ylim(c(5, 7))
+  #+ ylim(c(5, 7))
 )
 
 if(dir.exists("./figs")){
