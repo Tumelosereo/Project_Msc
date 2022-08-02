@@ -1,5 +1,6 @@
 .args <- if(interactive()){
   c("./output/sars_cov_2_outputs.RData",  # inputs
+    "./data/toci_treat.xlsx",
     "./figs/sars_cov_2_plot.jpg")  # outputs
 }else{
   commandArgs(trailingOnly = TRUE)
@@ -51,6 +52,8 @@ plot1 <- (ggplot(new_out)
 # Hypothetical drugs
 
 bed_capacity <- 20
+
+readRDS(.args[[2]])
 
 baseline_cm <- function(bed_cap, psb = .71, dub = 19) cum_mortality_df %>%
   filter(ps == psb, du == dub, cc == bed_cap)

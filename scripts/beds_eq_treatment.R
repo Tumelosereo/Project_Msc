@@ -34,10 +34,8 @@ treat_toc <- cum_mortality_df %>%
 treat_cm <- treat_toc %>% select(cm)
 
 bed_scen <- cum_mortality_df %>%
-  filter(round(ps, 2) == round(.65, 2), du == 28) %>% 
+  filter(round(ps, 2) == baseline_dat[1], du == baseline_dat[2]) %>% 
   mutate(tmp = cm - as.numeric(treat_cm)) %>%
   filter(abs(tmp) == min(abs(tmp)))
-
-
 
 saveRDS(bed_scen, file = target)
