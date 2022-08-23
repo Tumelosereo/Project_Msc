@@ -9,6 +9,7 @@
 target <- tail(.args, 1)
 
 library(ggplot2)
+library(readxl)
 library(dplyr)
 library(tidyr)
 library(patchwork)
@@ -53,7 +54,10 @@ plot1 <- (ggplot(new_out)
 
 bed_capacity <- 20
 
-readRDS(.args[[2]])
+p1 <- read_xlsx(.args[[2]])
+
+psb1 <- p1$usual_value
+names(psb1) <- p1$parms
 
 baseline_cm <- function(bed_cap, psb = .71, dub = 19) cum_mortality_df %>%
   filter(ps == psb, du == dub, cc == bed_cap)

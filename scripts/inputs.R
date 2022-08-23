@@ -26,7 +26,7 @@ parm_values <- parm_values[1:11]
 
 ## State variables
 
-N0 <- 150000 # Assumed total population
+N0 <- 100000 # Assumed total population
 
 ss <- read_excel("./data/states.xlsx")
 

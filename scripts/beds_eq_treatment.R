@@ -20,7 +20,7 @@ baseline_dat <- base_toc1$usual_value
 names(baseline_dat) <- base_toc1$parms
 
 base_toc <- cum_mortality_df %>% 
-  filter(ps == baseline_dat[1], du == baseline_dat[2], cc == 20)
+  filter(ps == baseline_dat["ps"], du == baseline_dat["du"], cc == 20)
 
 # Toci treatment
 
@@ -29,12 +29,12 @@ treat_dat <- base_toc1$treat_value
 names(treat_dat) <- base_toc1$parms
 
 treat_toc <- cum_mortality_df %>% 
-  filter(round(ps, 2) == treat_dat[1], du == treat_dat[2], cc == 20)
+  filter(round(ps, 2) == treat_dat["ps"], du == treat_dat["du"], cc == 20)
 
 treat_cm <- treat_toc %>% select(cm)
 
 bed_scen <- cum_mortality_df %>%
-  filter(round(ps, 2) == baseline_dat[1], du == baseline_dat[2]) %>% 
+  filter(round(ps, 2) == baseline_dat["ps"], du == baseline_dat["du"]) %>% 
   mutate(tmp = cm - as.numeric(treat_cm)) %>%
   filter(abs(tmp) == min(abs(tmp)))
 
