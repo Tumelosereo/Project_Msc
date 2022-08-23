@@ -54,10 +54,10 @@ plot1 <- (ggplot(new_out)
 
 bed_capacity <- 20
 
-p1 <- read_xlsx(.args[[2]])
-
-psb1 <- p1$usual_value
-names(psb1) <- p1$parms
+# p1 <- read_xlsx(.args[[2]])
+# 
+# psb1 <- p1$usual_value
+# names(psb1) <- p1$parms
 
 baseline_cm <- function(bed_cap, psb = .71, dub = 19) cum_mortality_df %>%
   filter(ps == psb, du == dub, cc == bed_cap)
@@ -73,9 +73,14 @@ plot2 <- (ggplot()
                  data = cum_mortality_df[cum_mortality_df$cc == bed_capacity, ])
   +
     geom_contour(breaks = c(min(cum_mortality_df$cm), 
-                            baseline_cm(180)$cm, 
+                            baseline_cm(100)$cm, 
                             max(cum_mortality_df$cm)), 
-                 data = cum_mortality_df[cum_mortality_df$cc == 180, ])
+                 data = cum_mortality_df[cum_mortality_df$cc == 100, ])
+  +
+    geom_contour(breaks = c(min(cum_mortality_df$cm), 
+                            baseline_cm(140)$cm, 
+                            max(cum_mortality_df$cm)), 
+                 data = cum_mortality_df[cum_mortality_df$cc == 140, ])
   +
     geom_point(data = baseline_cm(bed_capacity), size = 3, col = "blue")
   +
