@@ -1,5 +1,6 @@
 .args <- if(interactive()){
   c("./data/sars_cov_2_par.xlsx",   # inputs
+    "./data/toci_treat.xlsx",
     "./data/sars_cov_2_baseline.xlsx",  
     "./data/sars_cov_2.RData") # output
 }else{
@@ -9,12 +10,13 @@
 library(readxl)
 
 baseline_vals_raw <- read_excel(.args[2])
+baseline_vals <- baseline_vals_raw$usual_value
+names(baseline_vals) <- baseline_vals_raw$parms
 
 # Read Parameter values for SARS-Cov-2.
 
-baseline_vals <- c(ps = as.numeric(baseline_vals_raw$ps),
-                   du = as.numeric(baseline_vals_raw$du),
-                   cc = as.numeric(baseline_vals_raw$cc))
+baseline_vals <- c(baseline_vals,
+                   cc =20)
 
 pp <- read_excel(.args[1])
 

@@ -13,7 +13,7 @@
 
 # SARS_Cov_2
 
-./data/sars_cov_2.RData: ./scripts/inputs.R ./data/sars_cov_2_par.xlsx ./data/sars_cov_2_baseline.xlsx
+./data/sars_cov_2.RData: ./scripts/inputs.R ./data/sars_cov_2_par.xlsx ./data/toci_treat.xlsx
 	Rscript $^ $@
 	
 ./output/sars_cov_2_outputs.RData: ./scripts/run_model.R ./data/sars_cov_2.RData ./functions/functions.RData
@@ -21,7 +21,7 @@
 	
 # Ebola
 
-./data/ebola.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/ebola_baseline.xlsx
+./data/ebola.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/zmapp_treat.xlsx
 	Rscript $^ $@
 	
 ./output/ebola_outputs.RData: ./scripts/run_model.R ./data/ebola.RData ./functions/functions.RData
@@ -29,7 +29,10 @@
 	
 # SARS_Cov_1
 
-./data/sars_cov_1.RData: ./scripts/inputs.R ./data/sars_cov_1_par.xlsx ./data/sars_cov_2_baseline.xlsx
+./data/sars_cov_1.RData: ./scripts/inputs.R ./data/sars_cov_1_par.xlsx ./data/sars_cov1_wt.xlsx
+	Rscript $^ $@
+	
+./output/sars_cov_1_outputs.RData: ./scripts/run_model.R ./data/sars_cov_1.RData ./functions/functions.RData
 	Rscript $^ $@
 
 	
@@ -39,6 +42,11 @@
 	Rscript $^ $@
 
 ./figs/sars_cov_2_plot.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData
+	Rscript $^ $@
+	
+# SARS-CoV-1 figures
+
+./figs/sars_cov_1_model.jpg: ./scripts/visual2.R ./output/sars_cov_1_outputs.RData
 	Rscript $^ $@
 	
 # Ebola figures
@@ -54,7 +62,9 @@
 
 # Cost analysis
 
-# SARS-Cov-2 treatment
+##################### SARS-Cov-2 treatment ##################
+
+# Tocilizimab treatment
 
 ./data/bed_scen.rds: ./scripts/beds_eq_treatment.R ./output/sars_cov_2_outputs.RData ./data/toci_treat.xlsx
 	Rscript $^ $@
@@ -65,7 +75,12 @@
 ./figs/toci_cost.jpg: ./scripts/cost_benefit.R ./data/bed_scen.rds ./output/my_data.RData
 	Rscript $^ $@
 
-# Ebola treatmet
+# Remdisivir treament
+
+
+##################### Ebola treatmet ########################
+
+# Zmapp treatment
 
 ./data/ebola_cost_analysis.rds: ./scripts/beds_eq_treatment.R ./output/ebola_outputs.RData ./data/zmapp_treat.xlsx 
 	Rscript $^ $@
