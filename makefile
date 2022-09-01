@@ -19,6 +19,9 @@
 ./output/sars_cov_2_outputs.RData: ./scripts/run_model.R ./data/sars_cov_2.RData ./functions/functions.RData
 	Rscript $^ $@
 	
+./output/sarscov2_baseline_outputs.rds: ./scripts/baseline_output.R ./data/sars_cov_2.RData ./functions/functions.RData
+	Rscript $^ $@
+	
 # Ebola
 
 ./data/ebola.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/zmapp_treat.xlsx
@@ -62,7 +65,7 @@
 
 # Cost analysis
 
-##################### SARS-Cov-2 treatment ##################
+##################### SARS-Cov-2 treatments ##################
 
 # Tocilizimab treatment
 
@@ -77,8 +80,16 @@
 
 # Remdisivir treament
 
+./data/sars2_remd.rds: ./scripts/beds_eq_treatment.R ./output/sars_cov_2_outputs.RData ./data/remde_treat.xlsx
+	Rscript $^ $@
+	
+./output/sars2_remd_data.RData: ./scripts/count.R ./functions/functions.RData ./data/sars_cov_2.RData ./data/sars2_remd.rds ./data/remde_treat.xlsx
+	Rscript $^ $@
 
-##################### Ebola treatmet ########################
+./figs/remde_cost.jpg: ./scripts/cost_benefit.R ./data/sars2_remd.rds ./output/sars2_remd_data.RData
+	Rscript $^ $@
+
+##################### Ebola treatmets ########################
 
 # Zmapp treatment
 
@@ -91,5 +102,14 @@
 ./figs/zmapp.jpg: ./scripts/cost_benefit.R ./data/ebola_cost_analysis.rds ./output/ebola_data_cost.RData
 	Rscript $^ $@
 
+# Ebanga treatment 
 
+./data/ebola_ebanga.rds: ./scripts/beds_eq_treatment.R ./output/ebola_outputs.RData ./data/ebanga_treat.xlsx
+	Rscript $^ $@
+	
+./output/ebola_ebanga_data.RData: ./scripts/count.R ./functions/functions.RData ./data/ebola.RData ./data/ebola_ebanga.rds ./data/ebanga_treat.xlsx
+	Rscript $^ $@
+	
+./figs/ebanga_cost.jpg: ./scripts/cost_benefit.R ./data/ebola_ebanga.rds ./output/ebola_ebanga_data.RData
+	Rscript $^ $@
 
