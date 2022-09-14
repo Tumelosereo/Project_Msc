@@ -52,14 +52,17 @@ load(.args[[1]])
 ########################################################
 # Hypothetical drugs
 
+load("./output/sars_cov_2_outputs.RData")
+
 bed_capacity <- 20
 
-# p1 <- read_xlsx(.args[[2]])
+
+p1 <- read_xlsx(.args[[2]])
 # 
 # psb1 <- p1$usual_value
 # names(psb1) <- p1$parms
 
-baseline_cm <- function(bed_cap, psb = .71, dub = 19) cum_mortality_df %>%
+baseline_cm <- function(bed_cap, psb = .62, dub = 10) cum_mortality_df %>%
   filter(ps == psb, du == dub, cc == bed_cap)
 
 plot2 <- (ggplot()

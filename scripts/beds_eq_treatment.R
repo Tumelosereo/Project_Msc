@@ -39,3 +39,4 @@ bed_scen <- cum_mortality_df %>%
   filter(abs(tmp) == min(abs(tmp)))
 
 saveRDS(bed_scen, file = target)
+

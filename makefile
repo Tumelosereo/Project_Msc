@@ -29,14 +29,6 @@
 	
 ./output/ebola_outputs.RData: ./scripts/run_model.R ./data/ebola.RData ./functions/functions.RData
 	Rscript $^ $@
-	
-# SARS_Cov_1
-
-./data/sars_cov_1.RData: ./scripts/inputs.R ./data/sars_cov_1_par.xlsx ./data/sars_cov1_wt.xlsx
-	Rscript $^ $@
-	
-./output/sars_cov_1_outputs.RData: ./scripts/run_model.R ./data/sars_cov_1.RData ./functions/functions.RData
-	Rscript $^ $@
 
 	
 # SARS-Cov-2 figures 
@@ -46,11 +38,7 @@
 
 ./figs/sars_cov_2_plot.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData
 	Rscript $^ $@
-	
-# SARS-CoV-1 figures
 
-./figs/sars_cov_1_model.jpg: ./scripts/visual2.R ./output/sars_cov_1_outputs.RData
-	Rscript $^ $@
 	
 # Ebola figures
 

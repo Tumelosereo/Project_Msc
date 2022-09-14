@@ -32,7 +32,7 @@ names(usual_care) <- treat$parms
 treat_care <- treat$treat_value
 names(treat_care) <- treat$parms
 
-cout_usual <- c(usual_care, cc = bed_scen$cc)
+count_usual <- c(usual_care, cc = bed_scen$cc)
 
 treat_df <- run_covid(
   t = time_seq,
@@ -49,7 +49,7 @@ treat_df <- treat_df %>%
 casual_df <- run_covid(
   t = time_seq,
   pp = parm_values,
-  vals = cout_usual,
+  vals = count_usual,
   statev = state_var,
   ret_cm = FALSE )
 

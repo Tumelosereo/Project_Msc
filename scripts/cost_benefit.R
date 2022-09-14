@@ -20,8 +20,8 @@ inputs <- c(H = tail(treat_df$CA, 1)
             , A_t = tail(treat_df$cum_add_days, 1)
             , A_b = tail(casual_df$cum_add_days, 1)
             , delta.B = bed_scen$cc - 20
-            #, C_b = 10306.69
-            #, C_a = 3179
+            , C_b = 10306.69
+            , C_a = 3179
             )
 
 x_value <- seq(0, 20, 0.1)
@@ -32,9 +32,16 @@ x_value <- seq(0, 20, 0.1)
 
 cost_ba <- function(x, inputs) {
    with(as.list(inputs), {
+     #((A_b - A_t + delta.B * (C_b/C_a)) / H)*C_a
      (A_b - A_t + delta.B * x) / H
    })
 }
+
+print({
+  with(as.list(inputs), {
+    ((A_b - A_t + delta.B * (C_b/C_a)) / H)*C_a
+  })
+})
 
 cost_value <-  cost_ba(x = x_value,
                      inputs = inputs)

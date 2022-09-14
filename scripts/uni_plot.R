@@ -50,12 +50,12 @@ saveRDS(cost_df, file = target)
 remde <- readRDS("./output/remde_costD.rds")
 toci <- readRDS("./output/toci_costD.rds")
 
-color1 <- c("remdesivir" = "red", "Tocilizimab" = "blue")
+color1 <- c("Remdesivir" = "red", "Tocilizimab" = "blue")
 
 p1 <- (ggplot(remde) 
   + geom_line(aes(x = x_value, 
                 y = cost_value,
-                color = "remdesivir"),
+                color = "Remdesivir"),
               size = 1)
   
   + geom_line(data = toci,
@@ -79,7 +79,7 @@ ebanga <- readRDS("./output/ebanga_costD.rds")
 
 color2 <- c("ZMapp" = "brown", "Ebanga" = "orange")
 
-p1 <- (ggplot(zmapp) 
+p2 <- (ggplot(zmapp) 
        + geom_line(aes(x = x_value, 
                        y = cost_value,
                        color = "ZMapp"),
