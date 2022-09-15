@@ -36,8 +36,11 @@
 ./figs/sars_cov_2_model.jpg: ./scripts/visual2.R ./output/sars_cov_2_outputs.RData
 	Rscript $^ $@
 
-./figs/sars_cov_2_plot.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData
+./figs/sars2_tocicm.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData ./data/toci_treat.xlsx
 	Rscript $^ $@
+	
+./figs/sars2_remdecm.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData ./data/remde_treat.xlsx
+	Rscript $^ $@	
 
 	
 # Ebola figures
@@ -45,9 +48,11 @@
 ./figs/ebola_model.jpg: ./scripts/visual2.R ./output/ebola_outputs.RData
 	Rscript $^ $@
 
-./figs/ebola_plot.jpg: ./scripts/visual_plot.R ./output/ebola_outputs.RData
+./figs/ebola_zmappcm.jpg: ./scripts/visual_plot.R ./output/ebola_outputs.RData ./data/zmapp_treat.xlsx
 	Rscript $^ $@
 
+./figs/ebola_ebangacm.jpg: ./scripts/visual_plot.R ./output/ebola_outputs.RData ./data/ebanga_treat.xlsx
+	Rscript $^ $@
 
 ###########################################################################################
 
