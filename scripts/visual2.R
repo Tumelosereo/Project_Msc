@@ -15,11 +15,6 @@ library(tidyr)
 
 load(.args[[1]])
 
-#p1 <- read_xlsx(.args[[2]])
-
-#psb1 <- p1$usual_value
-#names(psb1) <- p1$parms
-
 # Plot the simulation output 
 # Make the data(out) long and plot according to the states.
 

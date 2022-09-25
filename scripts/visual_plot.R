@@ -15,39 +15,7 @@ library(tidyr)
 library(patchwork)
 
 load(.args[[1]])
-#source("./scripts/run_model.R", local = TRUE)
 
-
-# Plot the simulation output 
-# Make the data(out) long and plot according to the states.
-
-# new_out <- baseline_output %>%
-#   pivot_longer(S:CA, values_to = "Count", names_to = "States")
-# 
-# plot1 <- (ggplot(new_out)
-#                 +
-#                   geom_line(aes(
-#                     x = time,
-#                     y = Count,
-#                     col = States
-#                   ), size = 1)
-#                 +
-#                   labs(
-#                     x = "Time(days)"
-#                     , y = "Population"
-#                     , title = "Probability of surviving is 75%, 12 days of hospitalization 
-#                     with 20 availabe beds in population of 150000 individuals."
-#                   )
-#                 +
-#                   facet_wrap(~States, scales = "free") 
-#               +
-#                 ggeasy::easy_center_title()
-#               +
-#                 theme_bw()
-#               
-# )
-# 
-# 
 
 ########################################################
 # Hypothetical drugs
