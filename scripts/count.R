@@ -34,10 +34,13 @@ names(treat_care) <- treat$parms
 
 count_usual <- c(usual_care, cc = bed_scen$cc)
 
+# In this section, we calculate (count) the values of currently admitted, cumulative admission
+# and cumulative admission days for treatment and baseline scenarios.
+
 treat_df <- run_covid(
   t = time_seq,
   pp = parm_values,
-  vals = c(treat_care,cc = 20),
+  vals = c(treat_care,cc = 23),
   statev = state_var,
   ret_cm = FALSE )
 

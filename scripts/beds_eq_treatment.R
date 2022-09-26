@@ -20,7 +20,7 @@ baseline_dat <- base_toc1$usual_value
 names(baseline_dat) <- base_toc1$parms
 
 base_toc <- cum_mortality_df %>% 
-  filter(ps == baseline_dat["ps"], du == baseline_dat["du"], cc == 20)
+  filter(ps == baseline_dat["ps"], du == baseline_dat["du"], cc == 23)
 
 # Toci treatment
 
@@ -29,9 +29,12 @@ treat_dat <- base_toc1$treat_value
 names(treat_dat) <- base_toc1$parms
 
 treat_toc <- cum_mortality_df %>% 
-  filter(round(ps, 2) == treat_dat["ps"], du == treat_dat["du"], cc == 20)
+  filter(round(ps, 2) == treat_dat["ps"], du == treat_dat["du"], cc == 23)
 
 treat_cm <- treat_toc %>% select(cm)
+
+# We determine the number of beds needed in order to produce or give the same cumulative
+# mortality when using treatment only.
 
 bed_scen <- cum_mortality_df %>%
   filter(round(ps, 2) == baseline_dat["ps"], du == baseline_dat["du"]) %>% 

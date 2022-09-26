@@ -50,12 +50,16 @@ cost_df <- data.frame(cost_value,
                  x_value)
 
 plot3 <- (ggplot(cost_df) 
-  + geom_line(aes(x = x_value, 
+  + 
+    geom_line(aes(x = x_value, 
                  y = cost_value))
-  + labs(x = bquote(C[B]/C[A]),
-       y = bquote(C[T]/C[A])) 
-  + theme_bw()
-  #+ ylim(c(5, 7))
+  + 
+    labs(x = bquote(C[B]/C[A]),
+       y = bquote(C[T]/C[A]))
+  + 
+    geom_vline(xintercept  = 10306/3179, color = "red")
+  + 
+    theme_bw()
 )
 
 if(dir.exists("./figs")){
