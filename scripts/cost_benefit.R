@@ -49,15 +49,40 @@ cost_value <-  cost_ba(x = x_value,
 cost_df <- data.frame(cost_value,
                  x_value)
 
+rep(max(cost_df$cost_value), nrow(cost_df))
+min(cost_df$cost_value)
+
+colors <- c("Beds" = "lightblue", "Treatment" = "yellow")
+
 plot3 <- (ggplot(cost_df) 
   + 
     geom_line(aes(x = x_value, 
-                 y = cost_value))
+                 y = cost_value)
+              , size = 1)
   + 
     labs(x = bquote(C[B]/C[A]),
        y = bquote(C[T]/C[A]))
   + 
-    geom_vline(xintercept  = 10306/3179, color = "red")
+    geom_vline(xintercept  = 10306/3179, color = "red"
+               , size = 1)
+  +
+    geom_ribbon(aes(x = x_value,
+                    ymin = cost_value
+                    , ymax = rep(max(cost_value), nrow(cost_df))
+                    ),
+                fill = "lightblue"
+                , alpha = 0.5
+                )
+  +
+    geom_ribbon(aes(x = x_value,
+                    ymin = rep(min(cost_value), nrow(cost_df))
+                    , ymax = cost_value
+                    )
+                ,fill = "yellow"
+                , alpha = 0.5
+                )
+  +
+    scale_color_manual(values = colors)
   + 
     theme_bw()
 )
