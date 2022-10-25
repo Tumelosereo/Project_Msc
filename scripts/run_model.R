@@ -18,7 +18,7 @@ load(.args[[2]])
 
 # Run the model to produce all rates of a disease at baseline
 # base_sar2 <- c(ps=.75, du = 15, cc = 20)
-baseline_output <- run_covid(
+baseline_output <- run_model(
   t = time_seq,
   pp = parm_values,
   vals = baseline_vals,
@@ -39,7 +39,7 @@ if(file.exists(target)){
 } else{
   
   cm_res <- sapply(1:nrow(new_vals), function(ii) {
-    run_covid(
+    run_model(
       t = time_seq,
       pp = parm_values,
       vals = new_vals[ii, ],

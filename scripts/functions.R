@@ -7,7 +7,7 @@
 ## The following function calculates the rates for our model, it takes
 ## parameters, states variables and time as inputs.
 
-COVID <- function(t, statev, parms) {
+LethalD_Model <- function(t, statev, parms) {
   with(as.list(c(statev, parms)), {
     lambda <- lambda_value(parms, statev)
     pt <- prob_treat(Hts + Htd, parms)
@@ -63,14 +63,14 @@ CM_out <- function(ts) {
 ## The following function takes in different parameter values and return
 ## cumulative mortality.
 
-run_covid <- function(t, vals, pp, statev, ret_cm = TRUE) {
+run_model <- function(t, vals, pp, statev, ret_cm = TRUE) {
   with(as.list(vals), {
     all_pars <- c(pp, ps = ps, mu = 1 / du, a = cc)
 
     ts <- data.frame(lsoda(
       y = statev,
       times = t,
-      func = COVID,
+      func = LethalD_Model,
       parms = all_pars
     ))
     if (ret_cm) {

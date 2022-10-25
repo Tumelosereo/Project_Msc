@@ -21,6 +21,13 @@ load(.args[[1]])
 new_out <- baseline_output %>%
   pivot_longer(S:CA, values_to = "Count", names_to = "States")
 
+#treat_output <- run_model(
+#  t = time_seq,
+#  pp = parm_values,
+#  vals = treat_vals,
+#  statev = state_var, ret_cm = FALSE
+#)
+
 plot1 <- (ggplot(new_out)
           +
             geom_line(aes(
