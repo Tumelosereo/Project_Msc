@@ -16,24 +16,41 @@
 ./data/sars_cov_2.RData: ./scripts/inputs.R ./data/sars_cov_2_par.xlsx ./data/toci_treat.xlsx
 	Rscript $^ $@
 	
+./data/sarscov2_remde.RData: ./scripts/inputs.R ./data/sars_cov_2_par.xlsx ./data/remde_treat.xlsx
+	Rscript $^ $@
+	
 ./output/sars_cov_2_outputs.RData: ./scripts/run_model.R ./data/sars_cov_2.RData ./functions/functions.RData
 	Rscript $^ $@
 	
-./output/sarscov2_baseline_outputs.rds: ./scripts/baseline_output.R ./data/sars_cov_2.RData ./functions/functions.RData
+./output/sarscov2_baseline_outputs.RData: ./scripts/baseline_output.R ./data/sars_cov_2.RData ./functions/functions.RData
+	Rscript $^ $@
+
+./output/sarscov2_remde_base_out.RData: ./scripts/baseline_output.R ./data/sarscov2_remde.RData ./functions/functions.RData 
 	Rscript $^ $@
 	
 # Ebola
 
 ./data/ebola.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/zmapp_treat.xlsx
 	Rscript $^ $@
+
+./data/eboal_ebanga.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/ebanga_treat.xlsx
+	Rscript $^ $@
 	
 ./output/ebola_outputs.RData: ./scripts/run_model.R ./data/ebola.RData ./functions/functions.RData
 	Rscript $^ $@
+	
+./output/ebola_baseline_outputs.RData: ./scripts/baseline_output.R ./data/ebola.RData ./functions/functions.RData
+	Rscript $^ $@
 
+./output/ebola_ebanga_base_out.RData: ./scripts/baseline_output.R ./data/eboal_ebanga.RData ./functions/functions.RData 
+	Rscript $^ $@
 	
 # SARS-Cov-2 figures 
 
-./figs/sars_cov_2_model.jpg: ./scripts/visual2.R ./output/sars_cov_2_outputs.RData
+./figs/sars_cov_2_model.jpg: ./scripts/visual2.R ./output/sarscov2_baseline_outputs.RData
+	Rscript $^ $@
+	
+./figs/sarscov2_remde_model.jpg: ./scripts/visual2.R ./output/sarscov2_remde_base_out.RData
 	Rscript $^ $@
 
 ./figs/sars2_tocicm.jpg: ./scripts/visual_plot.R ./output/sars_cov_2_outputs.RData ./data/toci_treat.xlsx
@@ -45,7 +62,10 @@
 	
 # Ebola figures
 
-./figs/ebola_model.jpg: ./scripts/visual2.R ./output/ebola_outputs.RData
+./figs/ebola_model.jpg: ./scripts/visual2.R ./output/ebola_baseline_outputs.RData
+	Rscript $^ $@
+
+./figs/ebola_ebanga_model.jpg: ./scripts/visual2.R ./output/ebola_ebanga_base_out.RData
 	Rscript $^ $@
 
 ./figs/ebola_zmappcm.jpg: ./scripts/visual_plot.R ./output/ebola_outputs.RData ./data/zmapp_treat.xlsx

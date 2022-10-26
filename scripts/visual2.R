@@ -1,5 +1,5 @@
 .args <- if(interactive()){
-  c("./output/sars_cov_2_outputs.RData",  # inputs
+  c("./output/sarscov2_baseline_outputs.RData",  # inputs
     "./data/toci_treat.xlsx",
     "./figs/sars_cov_2_model.jpg")  # outputs
 }else{
@@ -21,12 +21,8 @@ load(.args[[1]])
 new_out <- baseline_output %>%
   pivot_longer(S:CA, values_to = "Count", names_to = "States")
 
-#treat_output <- run_model(
-#  t = time_seq,
-#  pp = parm_values,
-#  vals = treat_vals,
-#  statev = state_var, ret_cm = FALSE
-#)
+treat_out <- treat_output %>%
+  pivot_longer(S:CA, values_to = "Count", names_to = "States")
 
 plot1 <- (ggplot(new_out)
           +
@@ -35,6 +31,12 @@ plot1 <- (ggplot(new_out)
               y = Count,
               col = States
             ), size = 1)
+          +
+            geom_line(data = treat_out,
+                       aes(x = time,
+                           y = Count),
+                       linetype = "dotted",
+                       size = 1)
           +
             labs(
               x = "Time(days)"

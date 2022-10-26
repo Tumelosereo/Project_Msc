@@ -9,14 +9,29 @@
 
 library(readxl)
 
-baseline_vals_raw <- read_excel(.args[2])
+# Read the excel file with parameters
+
+baseline_vals_raw <- read_excel(.args[2]) 
+
+# Read raw values at baseline
+
 baseline_vals <- baseline_vals_raw$usual_value
 names(baseline_vals) <- baseline_vals_raw$parms
 
-# Read Parameter values for SARS-Cov-2.
+# Read raw values at at treatment
+
+treat_vals <- baseline_vals_raw$treat_value
+names(treat_vals) <- baseline_vals_raw$parms
+
+# Read Parameter values for SARS-Cov-2 at baseline.
 
 baseline_vals <- c(baseline_vals,
-                   cc =20)
+                   cc = 23)
+
+# Paramter with treatment.
+
+treat_vals <- c(treat_vals,
+                cc = 23)
 
 pp <- read_excel(.args[1])
 
