@@ -33,7 +33,7 @@
 ./data/ebola.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/zmapp_treat.xlsx
 	Rscript $^ $@
 
-./data/eboal_ebanga.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/ebanga_treat.xlsx
+./data/ebola_ebanga.RData: ./scripts/inputs.R ./data/ebola_par.xlsx ./data/ebanga_treat.xlsx
 	Rscript $^ $@
 	
 ./output/ebola_outputs.RData: ./scripts/run_model.R ./data/ebola.RData ./functions/functions.RData
@@ -42,7 +42,7 @@
 ./output/ebola_baseline_outputs.RData: ./scripts/baseline_output.R ./data/ebola.RData ./functions/functions.RData
 	Rscript $^ $@
 
-./output/ebola_ebanga_base_out.RData: ./scripts/baseline_output.R ./data/eboal_ebanga.RData ./functions/functions.RData 
+./output/ebola_ebanga_base_out.RData: ./scripts/baseline_output.R ./data/ebola_ebanga.RData ./functions/functions.RData 
 	Rscript $^ $@
 	
 # SARS-Cov-2 figures 
