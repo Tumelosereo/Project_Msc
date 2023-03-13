@@ -8,6 +8,9 @@ data/*.xlsx
 # Session Data files
 .RData
 
+#Figure extensions
+*.png *.jpg *.gif *.bmp *.svg *.pdf *.eps
+
 # User-specific files
 .Ruserdata
 
