@@ -47,11 +47,11 @@ plot2 <- (ggplot()
                             baseline_cm(100)$cm, 
                             max(cum_mortality_df$cm)), 
                  data = cum_mortality_df[cum_mortality_df$cc == 100, ])
-  +
-    geom_contour(breaks = c(min(cum_mortality_df$cm), 
-                            baseline_cm(140)$cm, 
-                            max(cum_mortality_df$cm)), 
-                 data = cum_mortality_df[cum_mortality_df$cc == 140, ])
+  #+
+    #geom_contour(breaks = c(min(cum_mortality_df$cm), 
+      #                      baseline_cm(140)$cm, 
+       #                     max(cum_mortality_df$cm)), 
+        #         data = cum_mortality_df[cum_mortality_df$cc == 140, ])
   +
     geom_point(data = baseline_cm(bed_capacity), size = 3, col = "blue")
   +

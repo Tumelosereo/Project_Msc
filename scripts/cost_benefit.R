@@ -1,4 +1,4 @@
-.args <- if(interactive()){
+libra.args <- if(interactive()){
   c("./data/bed_scen.rds", 
     "./output/my_data.RData",
     "./figs/toci_cost.jpg") # Outputs
